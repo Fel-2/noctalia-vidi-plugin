@@ -1,6 +1,6 @@
 # Vidi plugin for Noctalia
 
-A bar widget and panel showing the latest videos from [vidi](https://codeberg.org/Fel/Vidi)'s
+A bar widget and panel showing the latest videos from [vidi](https://github.com/Fel-2/Vidi)'s
 subscription feed, right in your Noctalia v5 bar.
 
 ![thumbnail](thumbnail.webp)
@@ -22,7 +22,7 @@ subscription feed, right in your Noctalia v5 bar.
 | Dependency | Why |
 |---|---|
 | Noctalia v5 with `plugin_api` ≥ 24 | current shells ship API ≥ 26 |
-| [vidi](https://codeberg.org/Fel/Vidi) ≥ 0.5.0 | feed cache + CLI deep-link |
+| [vidi](https://github.com/Fel-2/Vidi) ≥ 0.5.0 | feed cache + CLI deep-link |
 | jq | compaction of the feed cache |
 
 ## Install
