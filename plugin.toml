@@ -1,4 +1,5 @@
 id = "fel/vidi"
+license = "MIT"
 name = "Vidi"
 version = "0.2.0"
 plugin_api = 24
@@ -11,8 +12,8 @@ dependencies = ["vidi", "jq"]
 [[setting]]
 key = "max_items"
 type = "int"
-label_key = "settings.maxItems.label"
-description_key = "settings.maxItems.desc"
+label_key = "settings.max-items.label"
+description_key = "settings.max-items.desc"
 default = 10
 min = 3
 max = 30
@@ -21,29 +22,29 @@ step = 1
 [[setting]]
 key = "include_shorts"
 type = "bool"
-label_key = "settings.includeShorts.label"
-description_key = "settings.includeShorts.desc"
+label_key = "settings.include-shorts.label"
+description_key = "settings.include-shorts.desc"
 default = false
 
 [[setting]]
 key = "show_thumbnails"
 type = "bool"
-label_key = "settings.showThumbnails.label"
-description_key = "settings.showThumbnails.desc"
+label_key = "settings.show-thumbnails.label"
+description_key = "settings.show-thumbnails.desc"
 default = true
 
 [[setting]]
 key = "open_action"
 type = "select"
-label_key = "settings.openAction.label"
-description_key = "settings.openAction.desc"
+label_key = "settings.open-action.label"
+description_key = "settings.open-action.desc"
 default = "vidi"
 
 options = [
-  { value = "vidi", label_key = "settings.openAction.vidi" },
-  { value = "mpv", label_key = "settings.openAction.mpv" },
-  { value = "browser", label_key = "settings.openAction.browser" },
-  { value = "copy", label_key = "settings.openAction.copy" },
+  { value = "vidi", label_key = "settings.open-action.vidi" },
+  { value = "mpv", label_key = "settings.open-action.mpv" },
+  { value = "browser", label_key = "settings.open-action.browser" },
+  { value = "copy", label_key = "settings.open-action.copy" },
 ]
 
 [[widget]]

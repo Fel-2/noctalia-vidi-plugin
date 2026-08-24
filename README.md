@@ -1,96 +1,57 @@
-# Vidi plugin for Noctalia
+# Vidi
 
-A bar widget and panel showing the latest videos from [vidi](https://github.com/Fel-2/Vidi)'s
-subscription feed, right in your Noctalia v5 bar.
+Latest videos from [vidi](https://github.com/Fel-2/Vidi)'s subscription feed, right in your
+Noctalia bar — an unread badge plus a panel with the newest uploads, thumbnails included.
 
-![thumbnail](thumbnail.webp)
+## Plugin
 
-## Features
-
-- **Bar widget** with an unread badge — shows how many videos have been published since
-  you last checked the feed.
-- **Panel** listing the newest videos (up to 30) with channel, duration, views and age.
-- **Thumbnails** from vidi's preview image cache when available (`~/.cache/vidi/preview_images`).
-- Click a video to play it **directly in vidi** (`vidi <url>` deep-link, vidi ≥ 0.5.0) —
-  browser, mpv or copy-link are also selectable per settings.
-- Shorts can be excluded from the list and the unread count.
-- Efficient by design: reads vidi's feed cache (`~/.cache/vidi/feed_cache.json`) through
-  a `jq` compaction pass so no script callback ever parses the full file.
+| Field | Value |
+| --- | --- |
+| ID | `fel/vidi` |
+| Entries | Bar widget: `latest`; panel: `feed` |
+| Launcher Prefix | none |
 
 ## Requirements
 
-| Dependency | Why |
-|---|---|
-| Noctalia v5 with `plugin_api` ≥ 24 | current shells ship API ≥ 26 |
-| [vidi](https://github.com/Fel-2/Vidi) ≥ 0.5.0 | feed cache + CLI deep-link |
-| jq | compaction of the feed cache |
-
-## Install
-
-### Option A — as a plugin source (recommended)
-
-Adding the repo as a source lets Noctalia track updates:
-
-```sh
-noctalia msg plugins source add fel git https://github.com/Fel-2/noctalia-vidi-plugin
-```
-
-Then enable the plugin:
-
-```sh
-noctalia msg plugins enable fel/vidi
-```
-
-and add the widget to your bar (Noctalia settings → bar, widget name `fel/vidi:latest`,
-end zone is a good spot), or:
-
-```sh
-syskit bar widget-add end fel/vidi:latest --force   # if you use syskit
-```
-
-### Option B — manual
-
-Clone anywhere and symlink into Noctalia's local plugin directory (same workflow used
-during development):
-
-```sh
-git clone https://github.com/Fel-2/noctalia-vidi-plugin.git
-ln -s "$(pwd)/noctalia-vidi-plugin" ~/.local/share/noctalia/plugins/vidi
-noctalia plugins lint ~/.local/share/noctalia/plugins/vidi
-noctalia msg plugins enable fel/vidi
-```
-
-Then add `fel/vidi:latest` to your bar layout via Noctalia's bar settings.
+Install `vidi` (≥ 0.5.0) and `jq` on `PATH`. The widget reads vidi's feed cache
+(`~/.cache/vidi/feed_cache.json`), so open the Subscriptions screen in vidi at least once
+to build it. Playing a video in vidi needs the CLI deep-link added in vidi 0.5.0.
 
 ## Usage
 
-| Gesture / action | Result |
-|---|---|
-| Widget left click | toggle the feed panel |
-| Widget right click | open vidi in a terminal |
-| Widget middle click | mark the whole feed as seen |
-| Panel row click | open the video (default: play in vidi) |
-| Panel copy button | copy the video URL |
-| Panel header button | open vidi in a terminal |
-| Opening the panel | marks the feed seen |
+Add the widget to your bar in Noctalia's bar settings (widget `fel/vidi:latest`), or:
+
+```sh
+syskit bar widget-add end fel/vidi:latest --force   # when using syskit
+```
+
+The widget shows the number of videos published since you last checked the feed. Left
+click opens the panel, right click marks everything seen, middle click re-reads the feed
+cache. The panel lists the newest `max_items` videos; clicking a row opens the video
+(default: play it in vidi), the copy button copies its URL, and the header button opens
+vidi in a terminal. Opening the panel marks the feed seen.
+
+Toggle the panel from anywhere:
+
+```sh
+noctalia msg panel-toggle fel/vidi:feed
+```
 
 ## Settings
 
-| Setting | Default | Description |
-|---|---|---|
-| Maximum videos | 10 | how many videos the panel lists (3–30) |
-| Include shorts | off | count and show YouTube shorts |
-| Thumbnails | on | use thumbnails cached by vidi when available |
-| Click action | Open in vidi | what happens on row click (vidi / mpv / browser / copy) |
+| Setting | Type | Default | Description |
+| --- | --- | --- | --- |
+| `max_items` | `int` | `10` | How many videos the panel lists (3–30). |
+| `include_shorts` | `bool` | `false` | Count and show YouTube shorts in the feed and unread count. |
+| `show_thumbnails` | `bool` | `true` | Use thumbnails vidi has cached in `~/.cache/vidi/preview_images` when available. |
+| `open_action` | `select` | `vidi` | What happens on row click: `vidi`, `mpv`, `browser`, or `copy`. |
 
 ## Notes
 
-- The plugin only **reads** vidi's cache; refreshing happens inside vidi — open the
-  Subscriptions screen there once before first use, and whenever you want fresh data.
-  Until then the panel shows a hint instead of a list.
-- The unread counter persists across shell restarts
-  (`~/.local/state/noctalia/plugins/data/fel/vidi/seen.json`).
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+- The widget only **reads** vidi's cache; refreshing happens inside vidi — open its
+  Subscriptions screen to pick up new uploads.
+- It spawns `jq` once per feed change to compact the cache, so Noctalia never parses the
+  full file in a script callback.
+- The unread marker persists at `~/.local/state/noctalia/plugins/data/fel/vidi/seen.json`.
+- Opening a video in vidi launches a terminal running `vidi <url>`; the mpv and browser
+  actions spawn `mpv`/`xdg-open` directly.
