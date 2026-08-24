@@ -1,0 +1,14 @@
+[[plugin]]
+id = "fel/vidi"
+name = "Vidi"
+version = "0.2.0"
+updated_at = 1787600150
+added_at = 1787600150
+author = "fel"
+license = "MIT"
+icon = "brand-youtube"
+description = "Latest videos from your Vidi subscription feed."
+deprecated = false
+plugin_api = 24
+tags = ["Bar", "Utility", "Media"]
+dependencies = ["vidi", "jq"]

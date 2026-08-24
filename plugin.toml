@@ -1,0 +1,62 @@
+id = "fel/vidi"
+name = "Vidi"
+version = "0.2.0"
+plugin_api = 24
+author = "fel"
+icon = "brand-youtube"
+description = "Latest videos from your Vidi subscription feed."
+tags = ["Bar", "Utility", "Media"]
+dependencies = ["vidi", "jq"]
+
+[[setting]]
+key = "max_items"
+type = "int"
+label_key = "settings.maxItems.label"
+description_key = "settings.maxItems.desc"
+default = 10
+min = 3
+max = 30
+step = 1
+
+[[setting]]
+key = "include_shorts"
+type = "bool"
+label_key = "settings.includeShorts.label"
+description_key = "settings.includeShorts.desc"
+default = false
+
+[[setting]]
+key = "show_thumbnails"
+type = "bool"
+label_key = "settings.showThumbnails.label"
+description_key = "settings.showThumbnails.desc"
+default = true
+
+[[setting]]
+key = "open_action"
+type = "select"
+label_key = "settings.openAction.label"
+description_key = "settings.openAction.desc"
+default = "vidi"
+
+options = [
+  { value = "vidi", label_key = "settings.openAction.vidi" },
+  { value = "mpv", label_key = "settings.openAction.mpv" },
+  { value = "browser", label_key = "settings.openAction.browser" },
+  { value = "copy", label_key = "settings.openAction.copy" },
+]
+
+[[widget]]
+id = "latest"
+entry = "widget.luau"
+
+  [widget.actions]
+  middle = "none"
+
+[[panel]]
+id = "feed"
+entry = "panel.luau"
+width = 460
+height = 600
+placement = "attached"
+dismiss_on_outside_click = true
