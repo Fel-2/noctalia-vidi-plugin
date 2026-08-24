@@ -6,7 +6,7 @@ plugin_api = 24
 author = "fel"
 icon = "brand-youtube"
 description = "Latest videos from your Vidi subscription feed."
-tags = ["Bar", "Utility", "Media"]
+tags = ["bar", "media", "video"]
 dependencies = ["vidi", "jq"]
 
 [[setting]]

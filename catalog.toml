@@ -10,5 +10,5 @@ icon = "brand-youtube"
 description = "Latest videos from your Vidi subscription feed."
 deprecated = false
 plugin_api = 24
-tags = ["Bar", "Utility", "Media"]
+tags = ["bar", "media", "video"]
 dependencies = ["vidi", "jq"]
